@@ -5,35 +5,34 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 int done;
 
-void DrawChessBoard(SDL_Renderer *renderer)
+void DrawChessBoard()
 {
-    SDL_FRect rect;
     SDL_Rect darea;
-
-    /* Get the Size of drawing surface */
     SDL_GetRenderViewport(renderer, &darea);
 
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(renderer);
 
-    for (int row = 0; row < 8; row++) {
-        int column = row % 2;
-        int x = column;
-        for (; column < 4 + (row % 2); column++) {
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
+    for(auto i = 0; i < darea.w; i++)
+    {
+        for(auto j = 0; j < darea.h; j++)
+        {
+            auto x = static_cast<float>(i);
+            auto y = static_cast<float>(j);
 
-            rect.w = static_cast<float>(darea.w) / 8;
-            rect.h = static_cast<float>(darea.h) / 8;
-            rect.x = rect.w * static_cast<float>(x);
-            rect.y = rect.h * static_cast<float>(row);
-            x = x + 2;
-            SDL_RenderFillRect(renderer, &rect);
+            auto r = static_cast<Uint8>(i * 255 / darea.w);
+            auto g = static_cast<Uint8>(j * 255 / darea.h);
+            Uint8 b = 0x88;
+
+            SDL_SetRenderDrawColor(renderer, r, g, b, 0);
+            SDL_RenderPoint(renderer, x, y);
         }
     }
+    
     SDL_RenderPresent(renderer);
 }
 
-void loop()
+void ProcessEvents()
 {
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
@@ -47,25 +46,25 @@ void loop()
             return;
         }
     }
+}
 
-    DrawChessBoard(renderer);
+void MainLoop()
+{
+    ProcessEvents();
 
-    /* Got everything on rendering surface,
-       now Update the drawing image on window screen */
+    DrawChessBoard();
+    
     SDL_UpdateWindowSurface(window);
 }
 
 int main(int argc, char *argv[])
 {
     SDL_LogSetPriority(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO);
-
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_Init fail : %s\n", SDL_GetError());
         return 1;
     }
-
-    /* Create window and renderer for given surface */
-    window = SDL_CreateWindow("Chess Board", 640, 480, 0);
+    window = SDL_CreateWindow("WSR", 400, 400, 0);
     if (!window) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Window creation fail : %s\n", SDL_GetError());
         return 1;
@@ -77,11 +76,9 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    /* Draw the Image on rendering surface */
     done = 0;
-
     while (!done) {
-        loop();
+        MainLoop();
     }
 
     SDL_Quit();
