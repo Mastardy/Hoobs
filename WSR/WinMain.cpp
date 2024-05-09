@@ -1,50 +1,19 @@
 #include <chrono>
 #include <random>
-#include <string>
-#include <vector>
 #include <windows.h>
 
+#include "Renderer.hpp"
 #include "Utils/Logging.h"
 #include "Utils/Console.h"
 #include "Utils/Time.h"
 
-constexpr int WIDTH = 1000;
-constexpr int HEIGHT = 500;
-
-struct Color
-{
-    UINT8 b;
-    UINT8 g;
-    UINT8 r;
-    UINT8 a;
-};
+constexpr DWORD WIDTH = 1000;
+constexpr DWORD HEIGHT = 500;
 
 BITMAPINFO bmi = {};
 BITMAPINFOHEADER bmih;
 
 auto close = false;
-
-// Create a sample for dibBits
-std::vector<Color> dibBits(HEIGHT * WIDTH);
-
-void DrawBitmap(HWND hwnd)
-{
-    auto k = 0;
-    for (auto y = 0; y < HEIGHT; y++)
-    {
-        for (auto x = 0; x < WIDTH; x++)
-        {
-            dibBits[k].r = y % 255;
-            dibBits[k].g = x % 126;
-            dibBits[k].b = 0;
-            dibBits[k++].a = 255;
-        }
-    }
-
-    auto hdc = GetDC(hwnd);
-
-    SetDIBitsToDevice(hdc, 0, 0, WIDTH, HEIGHT, 0, 0, 0, HEIGHT, dibBits.data(), &bmi, DIB_RGB_COLORS);
-}
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -85,6 +54,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     bmi.bmiHeader = bmih;
 
     WSR::Console console;
+    WSR::Renderer renderer(WIDTH, HEIGHT);
 
     WSR::Logging::Init();
     WSR::Time::Init();
@@ -101,7 +71,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         }
         
         WSR::Time::Update();
-        DrawBitmap(hWnd);
+        renderer.Loop(hdc, hWnd, bmi);
         
         auto _ = swprintf_s(diffStr, 256, L"WSR - %fms - %ifps", WSR::Time::GetDeltaTime() * 1000.0f, static_cast<int>(1.0f / WSR::Time::GetDeltaTime()));
         SetWindowText(WindowFromDC(hdc), diffStr);

@@ -104,12 +104,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Utils\Console.cpp" />
     <ClCompile Include="Utils\Logging.cpp" />
     <ClCompile Include="Utils\Time.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="Utils\Console.h" />
     <ClInclude Include="Utils\Logging.h" />
     <ClInclude Include="Utils\Time.h" />
