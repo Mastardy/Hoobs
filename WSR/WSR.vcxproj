@@ -105,9 +105,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Utils\Console.cpp" />
+    <ClCompile Include="Utils\Logging.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
     <ClInclude Include="Utils\Console.h" />
+    <ClInclude Include="Utils\Logging.h" />
   <ItemGroup>
     <Folder Include="Mathematics\" />
   </ItemGroup>

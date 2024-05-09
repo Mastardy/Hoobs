@@ -4,6 +4,7 @@
 #include <vector>
 #include <windows.h>
 
+#include "Utils/Logging.h"
 #include "Utils/Console.h"
 
 constexpr int WIDTH = 1000;
@@ -94,6 +95,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     bmi.bmiHeader = bmih;
 
     WSR::Console console;
+
+    WSR::Logging::Init();
 
     while (!close)
     {
