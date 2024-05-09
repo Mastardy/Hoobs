@@ -6,6 +6,7 @@
 
 #include "Utils/Logging.h"
 #include "Utils/Console.h"
+#include "Utils/Time.h"
 
 constexpr int WIDTH = 1000;
 constexpr int HEIGHT = 500;
@@ -42,18 +43,7 @@ void DrawBitmap(HWND hwnd)
 
     auto hdc = GetDC(hwnd);
 
-    auto start = std::chrono::high_resolution_clock::now();
     SetDIBitsToDevice(hdc, 0, 0, WIDTH, HEIGHT, 0, 0, 0, HEIGHT, dibBits.data(), &bmi, DIB_RGB_COLORS);
-    auto end = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-
-    auto deltaTime = static_cast<float>(duration) / 1000.0f;
-    int fps = static_cast<int>(1.0f / (deltaTime / 1000));
-
-    // Create a LPCWSTR for title with diff.top
-    auto diffStr = new wchar_t[256];
-    auto _ = swprintf_s(diffStr, 256, L"WSR - %fms - %ifps", deltaTime, fps);
-    SetWindowText(WindowFromDC(hdc), diffStr);
 }
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
@@ -97,7 +87,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     WSR::Console console;
 
     WSR::Logging::Init();
+    WSR::Time::Init();
 
+    auto hdc = GetDC(hWnd);
+    auto diffStr = new wchar_t[256];
+    
     while (!close)
     {
         while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -105,10 +99,16 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-
-        // Render Method
+        
+        WSR::Time::Update();
         DrawBitmap(hWnd);
+        
+        auto _ = swprintf_s(diffStr, 256, L"WSR - %fms - %ifps", WSR::Time::GetDeltaTime() * 1000.0f, static_cast<int>(1.0f / WSR::Time::GetDeltaTime()));
+        SetWindowText(WindowFromDC(hdc), diffStr);
     }
+    
+    delete[] diffStr;
+    ReleaseDC(hWnd, hdc);
     
     return 0;
 }
