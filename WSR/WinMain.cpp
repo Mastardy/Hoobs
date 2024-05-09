@@ -24,27 +24,27 @@ std::vector<Color> dibBits(HEIGHT * WIDTH);
 std::mt19937 gen(std::time(nullptr));
 std::uniform_int_distribution<int> dis(0, 255);
 
-void DrawBitmap(HDC hdc)
+void DrawBitmap(HWND hwnd)
 {
-    auto start = std::chrono::high_resolution_clock::now();
-
     auto k = 0;
     for(auto y = 0; y < HEIGHT; y++)
     {
         for(auto x = 0; x < WIDTH; x++)
         {            
-            dibBits[k].r = 255;
-            dibBits[k].g = 0;
+            dibBits[k].r = y % 255;
+            dibBits[k].g = x % 126;
             dibBits[k].b = 0;
             dibBits[k++].a = 255;
         }
     }
     
+    auto hdc = GetDC(hwnd);
+
+    auto start = std::chrono::high_resolution_clock::now();
+    SetDIBitsToDevice(hdc, 0, 0, WIDTH, HEIGHT, 0, 0, 0, HEIGHT, dibBits.data(), &bmi, DIB_RGB_COLORS);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
     
-    SetDIBitsToDevice(hdc, 0, 0, WIDTH, HEIGHT, 0, 0, 0, HEIGHT, dibBits.data(), &bmi, DIB_RGB_COLORS);
-
     auto deltaTime = static_cast<float>(duration) / 1000.0f;
     int fps = static_cast<int>(1.0f / (deltaTime / 1000));
         
@@ -92,18 +92,16 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         
     bmi.bmiHeader = bmih;    
     
-    while(GetMessage(&msg, nullptr, 0, 0))
+    while(true)
     {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
+        while(PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+        {            
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);                        
+        }
         
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hWnd, &ps);
-
         // Render Method
-        DrawBitmap(hdc);
-            
-        EndPaint(hWnd, &ps);
+        DrawBitmap(hWnd);
     }
     
     return msg.wParam;
