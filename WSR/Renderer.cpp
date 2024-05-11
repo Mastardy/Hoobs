@@ -9,8 +9,8 @@ namespace WSR
         {
             for (DWORD x = 0; x < WIDTH; x++)
             {
-                dibBits[k].r = 255;
-                dibBits[k].g = 255;
+                dibBits[k].r = static_cast<UINT8>(static_cast<float>(x) / static_cast<float>(WIDTH) * 255);
+                dibBits[k].g = static_cast<UINT8>(static_cast<float>(y) / static_cast<float>(HEIGHT) * 255);
                 dibBits[k].b = 0;
                 dibBits[k++].a = 255;
             }

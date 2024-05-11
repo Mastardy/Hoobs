@@ -104,6 +104,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Mathematics\Color.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Utils\Console.cpp" />
     <ClCompile Include="Utils\Logging.cpp" />
@@ -111,13 +112,11 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Mathematics\Color.hpp" />
     <ClInclude Include="Renderer.hpp" />
-    <ClInclude Include="Utils\Console.h" />
-    <ClInclude Include="Utils\Logging.h" />
-    <ClInclude Include="Utils\Time.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mathematics\" />
+    <ClInclude Include="Utils\Console.hpp" />
+    <ClInclude Include="Utils\Logging.hpp" />
+    <ClInclude Include="Utils\Time.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

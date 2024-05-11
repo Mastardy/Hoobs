@@ -3,9 +3,9 @@
 #include <windows.h>
 
 #include "Renderer.hpp"
-#include "Utils/Logging.h"
-#include "Utils/Console.h"
-#include "Utils/Time.h"
+#include "Utils/Logging.hpp"
+#include "Utils/Console.hpp"
+#include "Utils/Time.hpp"
 
 constexpr DWORD WIDTH = 1000;
 constexpr DWORD HEIGHT = 500;
@@ -61,6 +61,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     auto hdc = GetDC(hWnd);
     auto diffStr = new wchar_t[256];
+    
+    WSR::Logging::Info();
     
     while (!close)
     {

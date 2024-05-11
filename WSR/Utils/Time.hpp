@@ -2,10 +2,10 @@
 
 #include <chrono>
 
-using namespace std::chrono;
-
 namespace WSR
 {
+    using namespace std::chrono;
+
     class Time
     {
     public:

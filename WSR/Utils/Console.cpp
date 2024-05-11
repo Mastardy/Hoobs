@@ -1,4 +1,4 @@
-﻿#include "Console.h"
+﻿#include "Console.hpp"
 #include <Windows.h>
 
 namespace WSR

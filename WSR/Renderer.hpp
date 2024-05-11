@@ -2,16 +2,10 @@
 #include <vector>
 #include <windows.h>
 
+#include "Mathematics/Color.hpp"
+
 namespace WSR
 {
-    struct Color
-    {
-        UINT8 b;
-        UINT8 g;
-        UINT8 r;
-        UINT8 a;
-    };
-    
     class Renderer
     {
     public:
