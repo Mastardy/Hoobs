@@ -62,8 +62,6 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     auto hdc = GetDC(hWnd);
     auto diffStr = new wchar_t[256];
     
-    WSR::Logging::Info();
-    
     while (!close)
     {
         while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
