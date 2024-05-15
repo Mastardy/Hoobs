@@ -106,6 +106,9 @@
   <ItemGroup>
     <ClCompile Include="Core\ThreadPool.cpp" />
     <ClCompile Include="Mathematics\Color.cpp" />
+    <ClCompile Include="Mathematics\Vector2.cpp" />
+    <ClCompile Include="Mathematics\Vector3.cpp" />
+    <ClCompile Include="Mathematics\Vector4.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Utils\Console.cpp" />
     <ClCompile Include="Utils\Logging.cpp" />
@@ -115,6 +118,9 @@
   <ItemGroup>
     <ClInclude Include="Core\ThreadPool.hpp" />
     <ClInclude Include="Mathematics\Color.hpp" />
+    <ClInclude Include="Mathematics\Vector2.hpp" />
+    <ClInclude Include="Mathematics\Vector3.hpp" />
+    <ClInclude Include="Mathematics\Vector4.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="Utils\Console.hpp" />
     <ClInclude Include="Utils\Logging.hpp" />
