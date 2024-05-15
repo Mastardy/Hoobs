@@ -4,6 +4,21 @@ using namespace std::chrono;
 
 namespace WSR
 {
+    Time::TimeSince::TimeSince()
+    {
+        timePoint = high_resolution_clock::now();
+    }
+
+    Time::TimeSince::TimeSince(const float since)
+    {
+        timePoint = time_point_cast<microseconds>(high_resolution_clock::now() - duration_cast<microseconds>(duration<float>(since)));
+    }
+
+    Time::TimeSince::operator float() const
+    {
+        return static_cast<float>(duration_cast<microseconds>(high_resolution_clock::now() - timePoint).count()) / 1000000.0f;
+    }    
+    
     float Time::timeScale = 1.0f;
 
     high_resolution_clock::time_point Time::appStart;

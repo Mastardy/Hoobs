@@ -9,6 +9,19 @@ namespace WSR
     class Time
     {
     public:
+        class TimeSince
+        {
+        public:
+            TimeSince();
+            TimeSince(const float since);
+            
+            operator float() const;
+            
+        private:
+            time_point<high_resolution_clock> timePoint;
+        };
+        
+    public:
         static float timeScale;
 
         static void Init();
