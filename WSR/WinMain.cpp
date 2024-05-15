@@ -10,10 +10,8 @@
 constexpr DWORD WIDTH = 1000;
 constexpr DWORD HEIGHT = 500;
 
-BITMAPINFO bmi = {};
-BITMAPINFOHEADER bmih;
-
 auto close = false;
+auto minimized = false;
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -29,7 +27,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     RegisterClass(&wc);
 
     HWND hWnd = CreateWindowEx(
-        0, CLASS_NAME, L"WSR", WS_OVERLAPPEDWINDOW,
+        0, CLASS_NAME, L"WSR", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
         CW_USEDEFAULT, CW_USEDEFAULT, WIDTH, HEIGHT + 39,
         nullptr, nullptr, hInstance, nullptr);
 
@@ -39,67 +37,69 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     MSG msg = {};
 
-    bmih.biSize = sizeof(BITMAPINFOHEADER);
-    bmih.biWidth = WIDTH;
-    bmih.biHeight = HEIGHT;
-    bmih.biPlanes = 1;
-    bmih.biBitCount = 32;
-    bmih.biCompression = BI_RGB;
-    bmih.biSizeImage = WIDTH * HEIGHT * 4;
-    bmih.biXPelsPerMeter = 0;
-    bmih.biYPelsPerMeter = 0;
-    bmih.biClrUsed = 0;
-    bmih.biClrImportant = 0;
-
-    bmi.bmiHeader = bmih;
+    BITMAPINFOHEADER bmih
+    {
+        sizeof(BITMAPINFOHEADER), WIDTH, HEIGHT, 1, 32, BI_RGB,
+        WIDTH * HEIGHT * 4, 0, 0, 0, 0
+    };
     
+    BITMAPINFO bmi
+    {
+        bmih, {{0, 0, 0, 0}}
+    };
+
     WSR::Console console;
     WSR::Renderer renderer(WIDTH, HEIGHT);
 
     WSR::Logging::Init();
     WSR::Time::Init();
 
-    WSR::Logging::Info("Testing Info!");
-    WSR::Logging::Debug("Testing Debug!");
-    WSR::Logging::Warning("Testing Warning!");
-    WSR::Logging::Error("Testing Error!");    
-    
     auto hdc = GetDC(hWnd);
     auto diffStr = new wchar_t[256];
-    
+
     while (!close)
     {
         WSR::Time::Update();
-        
+
         while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-        
+
         renderer.Loop(hdc, hWnd, bmi);
 
+        if(minimized) continue;
+        
         auto fps = 1.0f / WSR::Time::GetDeltaTime();
         auto dts = WSR::Time::GetDeltaTime() * 1000.0f;
         auto _ = swprintf_s(diffStr, 256, L"WSR - %fms - %ifps", dts, static_cast<int>(fps));
         SetWindowText(WindowFromDC(hdc), diffStr);
     }
-    
+
     delete[] diffStr;
     ReleaseDC(hWnd, hdc);
-    
+
     return 0;
 }
 
 
-
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    if (uMsg == WM_DESTROY)
+    switch (uMsg)
     {
+    case WM_DESTROY:
         PostQuitMessage(0);
         close = true;
         return 0;
+    case WM_SIZE:
+        {
+            minimized = wParam == SIZE_MINIMIZED;
+        }
+        break;
+    default:
+        break;
     }
+    
     return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }

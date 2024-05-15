@@ -10,15 +10,15 @@ namespace WSR
     class Renderer
     {
     public:
-        Renderer(DWORD width, DWORD height);
+        Renderer(DWORD, DWORD);
         
         void Loop(HDC, HWND, const BITMAPINFO&);
-    
+        
     private:
         void Render(size_t, size_t, size_t, size_t);
         void ClearBuffer();
         void ClearBufferThreaded(size_t start, size_t end);
-        
+
         std::vector<Color> m_DibBits;
         const static Color m_BackgroundColor;
         DWORD m_Width;

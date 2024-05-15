@@ -41,7 +41,7 @@ namespace WSR
     {
         if(m_Console == nullptr) return;
         m_Console->QueueMessage("[", 7);
-        m_Console->QueueMessage("Info", 9);
+        m_Console->QueueMessage("Info", 11);
         m_Console->QueueMessage(" - " + GetCurrentTime() + "] " + msg + "\n", 7);
     }
 
@@ -49,7 +49,7 @@ namespace WSR
     {
         if(m_Console == nullptr) return;
         m_Console->QueueMessage("[", 7);
-        m_Console->QueueMessage("Warning", 14);
+        m_Console->QueueMessage("Warning", 6);
         m_Console->QueueMessage(" - " + GetCurrentTime() + "] " + msg + "\n", 7);
     }
 
@@ -57,7 +57,7 @@ namespace WSR
     {
         if(m_Console == nullptr) return;
         m_Console->QueueMessage("[", 7);
-        m_Console->QueueMessage("Error", 12);
+        m_Console->QueueMessage("Error", 4);
         m_Console->QueueMessage(" - " + GetCurrentTime() + "] " + msg + "\n", 7);
     }
 
