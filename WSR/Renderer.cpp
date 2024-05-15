@@ -35,7 +35,7 @@ namespace WSR
         
         m_PoolSize = std::thread::hardware_concurrency() - 1;
         WSR::Logging::Info("Pool size: " + std::to_string(m_PoolSize));
-        m_Pool.resize(m_PoolSize);
+        m_ThreadPool.Start(m_PoolSize);
 
         m_CircleRadius = 50;
         m_CircleX = static_cast<float>(m_Width) / 2.0f;
@@ -44,25 +44,14 @@ namespace WSR
     
     void Renderer::Loop(HDC hdc, HWND hwnd, const BITMAPINFO& bmi)
     {
-        m_CircleX = static_cast<float>(m_Width) / 2.0f + sinf(WSR::Time::GetTime()) * 100;
-        m_CircleY = static_cast<float>(m_Height) / 2.0f + cosf(WSR::Time::GetTime()) * 100;
+        m_CircleX = static_cast<float>(m_Width) / 2.0f + static_cast<float>(sin(WSR::Time::GetTime())) * 100;
+        m_CircleY = static_cast<float>(m_Height) / 2.0f + static_cast<float>(cos(WSR::Time::GetTime())) * 100;
 
         ClearBuffer();
 
         SetDIBitsToDevice(hdc, 0, 0, m_Width, m_Height, 0, 0, 0, m_Height, m_DibBits.data(), &bmi, DIB_RGB_COLORS);
 
         return;
-        
-        for(size_t x = 0; x < m_PoolSize; x++)
-        {
-            m_Pool[x] = std::thread(&Renderer::Render, this, x * m_Width / m_PoolSize, 0, (x + 1) * m_Width / m_PoolSize, m_Height);
-        }
-
-        for (auto& t : m_Pool)
-        {
-            t.join();
-        }
-
     }
 
     void Renderer::Render(size_t startX, size_t startY, size_t endX, size_t endY)
@@ -84,7 +73,23 @@ namespace WSR
     }
 
     void Renderer::ClearBuffer()
-    {
-        std::fill(m_DibBits.begin(), m_DibBits.end(), m_BackgroundColor);
+    {        
+        auto size = m_DibBits.size();
+
+        for (size_t x = 0; x < m_PoolSize; x++)
+        {
+            m_ThreadPool.QueueJob([this, x, size]()
+            {
+                this->ClearBufferThreaded(size / m_PoolSize * x, size / m_PoolSize * (x + 1));
+            });
+        }
+
+        m_ThreadPool.Join();
     }
+
+    void Renderer::ClearBufferThreaded(size_t start, size_t end)
+    {
+        std::fill(m_DibBits.begin() + start, m_DibBits.begin() + end, m_BackgroundColor);
+    }
+    
 }

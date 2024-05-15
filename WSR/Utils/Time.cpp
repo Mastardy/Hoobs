@@ -44,7 +44,7 @@ namespace WSR
 
     void Time::CalculateCurrentFrame()
     {
-        curFrame = steady_clock::now();
+        curFrame = high_resolution_clock::now();
     }
 
     void Time::CalculateTime()

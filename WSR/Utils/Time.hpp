@@ -36,9 +36,9 @@ namespace WSR
         static void CalculateTime();
         static void CalculateDeltaTime();
         
-        static steady_clock::time_point appStart;
-        static steady_clock::time_point curFrame;
-        static steady_clock::time_point lastFrame;
+        static high_resolution_clock::time_point appStart;
+        static high_resolution_clock::time_point curFrame;
+        static high_resolution_clock::time_point lastFrame;
 
         static double time;
         static double deltaTime;
