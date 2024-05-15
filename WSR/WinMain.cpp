@@ -64,6 +64,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     
     while (!close)
     {
+        WSR::Time::TimeSince frame;
+        
         while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
@@ -72,9 +74,13 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         
         WSR::Time::Update();
         renderer.Loop(hdc, hWnd, bmi);
-        
-        auto _ = swprintf_s(diffStr, 256, L"WSR - %fms - %ifps", WSR::Time::GetDeltaTime() * 1000.0f, static_cast<int>(1.0f / WSR::Time::GetDeltaTime()));
+
+        auto fps = 1.0f / WSR::Time::GetDeltaTime();
+        auto dts = WSR::Time::GetDeltaTime() * 1000.0f;
+        auto _ = swprintf_s(diffStr, 256, L"WSR - %fms - %ifps", dts, static_cast<int>(fps));
         SetWindowText(WindowFromDC(hdc), diffStr);
+
+        WSR::Logging::Info(std::to_string(WSR::Time::GetDeltaTime()) + " - " + std::to_string(frame));
     }
     
     delete[] diffStr;

@@ -9,14 +9,14 @@ namespace WSR
         timePoint = high_resolution_clock::now();
     }
 
-    Time::TimeSince::TimeSince(const float since)
+    Time::TimeSince::TimeSince(const double& since)
     {
         timePoint = time_point_cast<microseconds>(high_resolution_clock::now() - duration_cast<microseconds>(duration<float>(since)));
     }
 
-    Time::TimeSince::operator float() const
+    Time::TimeSince::operator double() const
     {
-        return static_cast<float>(duration_cast<microseconds>(high_resolution_clock::now() - timePoint).count()) / 1000000.0f;
+        return static_cast<double>(duration_cast<microseconds>(high_resolution_clock::now() - timePoint).count()) / 1000000.0;
     }    
     
     float Time::timeScale = 1.0f;
@@ -25,8 +25,8 @@ namespace WSR
     high_resolution_clock::time_point Time::curFrame;
     high_resolution_clock::time_point Time::lastFrame;
 
-    float Time::time = 0.0f;
-    float Time::deltaTime = 0.0f;
+    double Time::time = 0.0;
+    double Time::deltaTime = 0.0;
 
     void Time::Init()
     {
@@ -49,21 +49,21 @@ namespace WSR
 
     void Time::CalculateTime()
     {
-        time = static_cast<float>(duration_cast<std::chrono::milliseconds>(curFrame - appStart).count()) / 1000.0f;
+        time = static_cast<double>(duration_cast<std::chrono::milliseconds>(curFrame - appStart).count()) / 1000.0;
     }
 
     void Time::CalculateDeltaTime()
     {
-        deltaTime = static_cast<float>(duration_cast<std::chrono::microseconds>(curFrame - lastFrame).count()) / 1000000.0f;
+        deltaTime = static_cast<double>(duration_cast<std::chrono::microseconds>(curFrame - lastFrame).count()) / 1000000.0;
         lastFrame = curFrame;
     }
 
-    float Time::GetTime()
+    double Time::GetTime()
     {
         return time;
     }
 
-    float Time::GetDeltaTime()
+    double Time::GetDeltaTime()
     {
         return deltaTime * timeScale;
     }

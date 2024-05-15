@@ -13,9 +13,9 @@ namespace WSR
         {
         public:
             TimeSince();
-            TimeSince(const float since);
+            TimeSince(const double& since);
             
-            operator float() const;
+            operator double() const;
             
         private:
             time_point<high_resolution_clock> timePoint;
@@ -28,8 +28,8 @@ namespace WSR
 
         static void Update();
 
-        static float GetTime();
-        static float GetDeltaTime();
+        static double GetTime();
+        static double GetDeltaTime();
 
     private:
         static void CalculateCurrentFrame();
@@ -40,7 +40,7 @@ namespace WSR
         static steady_clock::time_point curFrame;
         static steady_clock::time_point lastFrame;
 
-        static float time;
-        static float deltaTime;
+        static double time;
+        static double deltaTime;
     };
 }

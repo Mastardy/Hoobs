@@ -6,7 +6,7 @@
 #include "Utils/Time.hpp"
 
 namespace WSR
-{
+{    
     const Color Renderer::m_BackgroundColor = { 48, 24, 24, 255 };
     
     void WaveRGB(float t, UINT8& r, UINT8& g, UINT8& b)
@@ -48,6 +48,10 @@ namespace WSR
         m_CircleY = static_cast<float>(m_Height) / 2.0f + cosf(WSR::Time::GetTime()) * 100;
 
         ClearBuffer();
+
+        SetDIBitsToDevice(hdc, 0, 0, m_Width, m_Height, 0, 0, 0, m_Height, m_DibBits.data(), &bmi, DIB_RGB_COLORS);
+
+        return;
         
         for(size_t x = 0; x < m_PoolSize; x++)
         {
@@ -59,7 +63,6 @@ namespace WSR
             t.join();
         }
 
-        SetDIBitsToDevice(hdc, 0, 0, m_Width, m_Height, 0, 0, 0, m_Height, m_DibBits.data(), &bmi, DIB_RGB_COLORS);
     }
 
     void Renderer::Render(size_t startX, size_t startY, size_t endX, size_t endY)
@@ -68,7 +71,6 @@ namespace WSR
         {
             for (auto x = startX; x < endX; x++)
             {
-
                 auto distance = sqrtf(powf(static_cast<float>(x) - static_cast<float>(m_CircleX), 2) + powf(static_cast<float>(y) - static_cast<float>(m_CircleY), 2));
                 if (distance <= m_CircleRadius)
                 {
