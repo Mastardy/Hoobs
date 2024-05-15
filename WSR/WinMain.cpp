@@ -52,13 +52,18 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     bmih.biClrImportant = 0;
 
     bmi.bmiHeader = bmih;
-
+    
     WSR::Console console;
     WSR::Renderer renderer(WIDTH, HEIGHT);
 
     WSR::Logging::Init();
     WSR::Time::Init();
 
+    WSR::Logging::Info("Testing Info!");
+    WSR::Logging::Debug("Testing Debug!");
+    WSR::Logging::Warning("Testing Warning!");
+    WSR::Logging::Error("Testing Error!");    
+    
     auto hdc = GetDC(hWnd);
     auto diffStr = new wchar_t[256];
     
@@ -85,6 +90,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     
     return 0;
 }
+
+
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {

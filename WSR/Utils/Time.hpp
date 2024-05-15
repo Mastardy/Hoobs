@@ -13,7 +13,7 @@ namespace WSR
         {
         public:
             TimeSince();
-            TimeSince(const double& since);
+            TimeSince(double since);
             
             operator double() const;
             

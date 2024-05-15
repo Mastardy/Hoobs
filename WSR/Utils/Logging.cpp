@@ -1,12 +1,13 @@
 ﻿#include "Logging.hpp"
 
-#include <iostream>
 #include <sstream>
 #include <ctime>
 #include <windows.h>
 
 namespace WSR
 {
+    Console* Logging::m_Console = nullptr;
+    
     std::string GetCurrentTime()
     {
         const time_t now = std::time(nullptr);
@@ -20,55 +21,48 @@ namespace WSR
 
         return {buffer};
     }
-    
+
     void Logging::Init()
     {
+        m_Console = Console::GetInstance();
+        if(m_Console == nullptr) throw std::runtime_error("Console is nullptr!");
         Info("Starting Logging...");
     }
 
     void Logging::Debug(const std::string& msg)
     {
-        std::cout << "[";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 9);
-        std::cout << "Debug";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-        std::cout << " - " << GetCurrentTime() << "] " << msg << "\n";
+        if(m_Console == nullptr) return;
+        m_Console->QueueMessage("[", 7);
+        m_Console->QueueMessage("Debug", 10);
+        m_Console->QueueMessage(" - " + GetCurrentTime() + "] " + msg + "\n", 7);
     }
 
     void Logging::Info(const std::string& msg)
     {
-        std::cout << "[";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-        std::cout << "Info";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-        std::cout << " - " << GetCurrentTime() << "] " << msg << "\n";
+        if(m_Console == nullptr) return;
+        m_Console->QueueMessage("[", 7);
+        m_Console->QueueMessage("Info", 9);
+        m_Console->QueueMessage(" - " + GetCurrentTime() + "] " + msg + "\n", 7);
     }
 
     void Logging::Warning(const std::string& msg)
     {
-        std::cout << "[";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-        std::cout << "Warning";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-        std::cout << " - " << GetCurrentTime() << "] " << msg << "\n";
+        if(m_Console == nullptr) return;
+        m_Console->QueueMessage("[", 7);
+        m_Console->QueueMessage("Warning", 14);
+        m_Console->QueueMessage(" - " + GetCurrentTime() + "] " + msg + "\n", 7);
     }
 
     void Logging::Error(const std::string& msg)
     {
-        std::cout << "[";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-        std::cout << "Error";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-        std::cout << " - " << GetCurrentTime() << "] " << msg << "\n";
+        if(m_Console == nullptr) return;
+        m_Console->QueueMessage("[", 7);
+        m_Console->QueueMessage("Error", 12);
+        m_Console->QueueMessage(" - " + GetCurrentTime() + "] " + msg + "\n", 7);
     }
 
-    std::string Logging::Bool(const bool& condition)
+    std::string Logging::Bool(bool condition)
     {
         return condition ? "True" : "False";
-    }
-
-    void Logging::Pause()
-    {
-        std::cin.get();
     }
 }

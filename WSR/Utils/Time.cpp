@@ -9,7 +9,7 @@ namespace WSR
         timePoint = high_resolution_clock::now();
     }
 
-    Time::TimeSince::TimeSince(const double& since)
+    Time::TimeSince::TimeSince(double since)
     {
         timePoint = time_point_cast<microseconds>(high_resolution_clock::now() - duration_cast<microseconds>(duration<float>(since)));
     }

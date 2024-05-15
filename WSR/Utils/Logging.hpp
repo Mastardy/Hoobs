@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "Console.hpp"
+
 namespace WSR
 {
     class Logging
@@ -14,8 +16,9 @@ namespace WSR
         static void Warning(const std::string& msg);
         static void Error(const std::string& msg);
 
-        static std::string Bool(const bool& condition);
+        static std::string Bool(bool condition);
 
-        static void Pause();
+    private:
+        static Console* m_Console;
     };
 }
