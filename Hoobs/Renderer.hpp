@@ -3,6 +3,7 @@
 #include <windows.h>
 
 #include "Core/ThreadPool.hpp"
+#include "Core/Vertex.hpp"
 #include "Mathematics/Color.hpp"
 
 namespace WSR
@@ -22,7 +23,10 @@ namespace WSR
 
         void SetColor(UINT8, UINT8, UINT8);
         void SetPixel(size_t, size_t);
+        void DrawTriangle(const Vertex& v0, const Vertex& v1, const Vertex& v2);
 
+        static inline float EdgeFunction(const Vector3& a, const Vector3& b, const Vector3& c);
+        
         Color m_CurrentColor;
         
         std::vector<Color> m_DibBits;

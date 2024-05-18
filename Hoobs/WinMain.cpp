@@ -72,7 +72,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
         renderer.Loop(hdc, hWnd, bmi);
 
-        if(fpsTimer < 1 || minimized) continue;
+        if(fpsTimer < 0.5f || minimized) continue;
 
         fpsTimer = 0.0f;
         auto fps = 1.0f / WSR::Time::GetDeltaTime();
