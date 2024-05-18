@@ -48,6 +48,26 @@ namespace WSR
         }
     }
 
+    Color Color::operator*(float scalar) const
+    {
+        return {
+            static_cast<UINT8>(static_cast<float>(b) * scalar),
+            static_cast<UINT8>(static_cast<float>(g) * scalar),
+            static_cast<UINT8>(static_cast<float>(r) * scalar),
+            a
+        };
+    }
+
+    Color Color::operator+(const Color& color) const
+    {
+        return {
+            static_cast<UINT8>(b + color.b),
+            static_cast<UINT8>(g + color.g),
+            static_cast<UINT8>(r + color.r),
+            static_cast<UINT8>(a + color.a)
+        };
+    }
+
     UINT8 Color::Grayscale() const
     {
         return static_cast<UINT8>(0.299f * static_cast<float>(r) + 0.587f * static_cast<float>(g) + 0.114f * static_cast<float>(b));

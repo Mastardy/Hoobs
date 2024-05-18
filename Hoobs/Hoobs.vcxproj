@@ -92,6 +92,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -106,7 +107,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Core\ThreadPool.cpp" />
+    <ClCompile Include="Core\Vertex.cpp" />
     <ClCompile Include="Mathematics\Color.cpp" />
+    <ClCompile Include="Mathematics\Matrix3.cpp" />
+    <ClCompile Include="Mathematics\Matrix4.cpp" />
+    <ClCompile Include="Mathematics\Random.cpp" />
+    <ClCompile Include="Mathematics\Rect.cpp" />
     <ClCompile Include="Mathematics\Vector2.cpp" />
     <ClCompile Include="Mathematics\Vector3.cpp" />
     <ClCompile Include="Mathematics\Vector4.cpp" />
@@ -118,7 +124,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\ThreadPool.hpp" />
+    <ClInclude Include="Core\Vertex.hpp" />
     <ClInclude Include="Mathematics\Color.hpp" />
+    <ClInclude Include="Mathematics\Matrix3.hpp" />
+    <ClInclude Include="Mathematics\Matrix4.hpp" />
+    <ClInclude Include="Mathematics\Random.hpp" />
+    <ClInclude Include="Mathematics\Rect.hpp" />
     <ClInclude Include="Mathematics\Vector2.hpp" />
     <ClInclude Include="Mathematics\Vector3.hpp" />
     <ClInclude Include="Mathematics\Vector4.hpp" />

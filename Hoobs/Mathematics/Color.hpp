@@ -34,6 +34,9 @@ namespace WSR
         
         UINT8 operator[](UINT8 index) const;
 
+        Color operator*(float scalar) const;
+        Color operator+(const Color& color) const;
+
         UINT8 Grayscale() const;
 
         operator std::string() const;
