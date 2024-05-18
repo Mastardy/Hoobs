@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WSR", "WSR\WSR.vcxproj", "{11BC7EEE-3A98-4286-AEF7-48056CF6FA99}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hoobs", "Hoobs\Hoobs.vcxproj", "{11BC7EEE-3A98-4286-AEF7-48056CF6FA99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -17,7 +17,7 @@ LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-    auto CLASS_NAME = L"WSR";
+    auto CLASS_NAME = L"Hoobs";
 
     WNDCLASS wc = {};
     wc.lpfnWndProc = WindowProc;
@@ -27,7 +27,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     RegisterClass(&wc);
 
     HWND hWnd = CreateWindowEx(
-        0, CLASS_NAME, L"WSR", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
+        0, CLASS_NAME, L"Hoobs", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
         CW_USEDEFAULT, CW_USEDEFAULT, WIDTH, HEIGHT + 39,
         nullptr, nullptr, hInstance, nullptr);
 
@@ -77,7 +77,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         fpsTimer = 0.0f;
         auto fps = 1.0f / WSR::Time::GetDeltaTime();
         auto dts = WSR::Time::GetDeltaTime() * 1000.0f;
-        auto _ = swprintf_s(diffStr, 256, L"WSR - %fms - %ifps", dts, static_cast<int>(fps));
+        auto _ = swprintf_s(diffStr, 256, L"Hoobs - %fms - %ifps", dts, static_cast<int>(fps));
         SetWindowText(WindowFromDC(hdc), diffStr);
     }
 

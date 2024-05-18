@@ -24,7 +24,7 @@ namespace WSR
     {
         AllocConsole();
         (void)freopen_s(&m_Console, "CONOUT$", "w", stdout);
-        SetConsoleTitle(L"WSR Console");
+        SetConsoleTitle(L"Hoobs Console");
 
         while (!m_ShouldClose)
         {
