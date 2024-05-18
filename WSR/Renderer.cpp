@@ -36,40 +36,17 @@ namespace WSR
         m_PoolSize = std::thread::hardware_concurrency() - 1;
         WSR::Logging::Info("Pool size: " + std::to_string(m_PoolSize));
         m_ThreadPool.Start(m_PoolSize);
-
-        m_CircleRadius = 50;
-        m_CircleX = static_cast<float>(m_Width) / 2.0f;
-        m_CircleY = static_cast<float>(m_Height) / 2.0f;
     }
     
     void Renderer::Loop(HDC hdc, HWND hwnd, const BITMAPINFO& bmi)
     {
-        m_CircleX = static_cast<float>(m_Width) / 2.0f + static_cast<float>(sin(WSR::Time::GetTime())) * 100;
-        m_CircleY = static_cast<float>(m_Height) / 2.0f + static_cast<float>(cos(WSR::Time::GetTime())) * 100;
-
         ClearBuffer();
 
+        Render();
+        
         SetDIBitsToDevice(hdc, 0, 0, m_Width, m_Height, 0, 0, 0, m_Height, m_DibBits.data(), &bmi, DIB_RGB_COLORS);
 
         return;
-    }
-
-    void Renderer::Render(size_t startX, size_t startY, size_t endX, size_t endY)
-    {
-        for (auto y = startY; y < endY; y++)
-        {
-            for (auto x = startX; x < endX; x++)
-            {
-                auto distance = sqrtf(powf(static_cast<float>(x) - static_cast<float>(m_CircleX), 2) + powf(static_cast<float>(y) - static_cast<float>(m_CircleY), 2));
-                if (distance <= m_CircleRadius)
-                {
-                    auto i = x + y * m_Width;
-                    WaveRGB(WSR::Time::GetTime() * 5, m_DibBits[i].r, m_DibBits[i].g, m_DibBits[i].b);
-                    m_DibBits[i].a = 255;
-                    continue;
-                }
-            }
-        }
     }
 
     void Renderer::ClearBuffer()
@@ -91,5 +68,34 @@ namespace WSR
     {
         std::fill(m_DibBits.begin() + start, m_DibBits.begin() + end, m_BackgroundColor);
     }
-    
+           
+    void Renderer::Render()
+    {
+        for(auto i = 0; i < 5; i++)
+        {
+            auto x = static_cast<float>(m_Width) / 2.0f + static_cast<float>(sin(WSR::Time::GetTime() * (i + 1))) * i * 20;
+            auto y = static_cast<float>(m_Height) / 2.0f + static_cast<float>(cos(WSR::Time::GetTime() * (i + 1))) * i * 20;
+            SetColor(255, 0, 0);
+            for(auto j = -1; j <= 1; j++)
+            {
+                for(auto k = -1; k <= 1; k++)
+                {
+                    SetPixel(static_cast<size_t>(x) + j, static_cast<size_t>(y) + k);
+                }
+            }
+        }
+    }
+
+    void Renderer::SetColor(UINT8 r, UINT8 g, UINT8 b)
+    {
+        m_CurrentColor = { b, g, r, 255 };
+    }
+
+    void Renderer::SetPixel(size_t x, size_t y)
+    {
+        if(x < 0 || y < 0 || x >= m_Width || y >= m_Height) return;
+
+        auto pixel = m_DibBits.data() + y * m_Width + x;
+        *pixel = m_CurrentColor;
+    }
 }

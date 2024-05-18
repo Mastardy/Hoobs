@@ -57,10 +57,13 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     auto hdc = GetDC(hWnd);
     auto diffStr = new wchar_t[256];
 
+    double fpsTimer = 0.0f;
+
     while (!close)
     {
         WSR::Time::Update();
-
+        fpsTimer += WSR::Time::GetDeltaTime();
+        
         while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
@@ -69,8 +72,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
         renderer.Loop(hdc, hWnd, bmi);
 
-        if(minimized) continue;
-        
+        if(fpsTimer < 1 || minimized) continue;
+
+        fpsTimer = 0.0f;
         auto fps = 1.0f / WSR::Time::GetDeltaTime();
         auto dts = WSR::Time::GetDeltaTime() * 1000.0f;
         auto _ = swprintf_s(diffStr, 256, L"WSR - %fms - %ifps", dts, static_cast<int>(fps));

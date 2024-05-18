@@ -15,10 +15,16 @@ namespace WSR
         void Loop(HDC, HWND, const BITMAPINFO&);
         
     private:
-        void Render(size_t, size_t, size_t, size_t);
         void ClearBuffer();
         void ClearBufferThreaded(size_t start, size_t end);
+        
+        void Render();
 
+        void SetColor(UINT8, UINT8, UINT8);
+        void SetPixel(size_t, size_t);
+
+        Color m_CurrentColor;
+        
         std::vector<Color> m_DibBits;
         const static Color m_BackgroundColor;
         DWORD m_Width;
@@ -26,9 +32,5 @@ namespace WSR
         
         ThreadPool m_ThreadPool;
         size_t m_PoolSize;
-
-        float m_CircleX;
-        float m_CircleY;
-        float m_CircleRadius;
     };
 }
