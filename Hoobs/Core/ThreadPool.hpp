@@ -31,5 +31,6 @@ namespace WSR
         std::vector<std::thread> m_Threads;
         std::condition_variable m_QueueCondition;
         std::condition_variable m_BusyCondition;
+        std::atomic<int> m_BusyThreads = 0;
     };
 }

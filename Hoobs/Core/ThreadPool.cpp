@@ -1,5 +1,7 @@
 #include "ThreadPool.hpp"
 
+#include "../Utils/Logging.hpp"
+
 namespace WSR
 {
     ThreadPool::ThreadPool(size_t threadsCount)
@@ -48,10 +50,10 @@ namespace WSR
         std::unique_lock<std::mutex> lock(m_QueueMutex);
         m_BusyCondition.wait(lock, [this]
         {
-            return m_JobsQueue.empty();
+            return m_JobsQueue.empty() && m_BusyThreads == 0;
         });
     }
-    
+
     void ThreadPool::ThreadLoop()
     {
         while(true)
@@ -66,9 +68,14 @@ namespace WSR
                 if(!m_ShouldRun) return;
                 job = m_JobsQueue.front();
                 m_JobsQueue.pop();
+                ++m_BusyThreads;
             }
             job();
-            m_BusyCondition.notify_one();
+            {
+                std::unique_lock<std::mutex> lock(m_QueueMutex);
+                --m_BusyThreads;
+                if(m_JobsQueue.empty() && m_BusyThreads == 0) m_BusyCondition.notify_all();
+            }
         }
     }
 }
