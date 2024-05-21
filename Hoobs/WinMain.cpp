@@ -7,8 +7,8 @@
 #include "Utils/Console.hpp"
 #include "Utils/Time.hpp"
 
-constexpr DWORD WIDTH = 1000;
-constexpr DWORD HEIGHT = 500;
+constexpr DWORD WIDTH = 640;
+constexpr DWORD HEIGHT = 360;
 
 auto close = false;
 auto minimized = false;
@@ -58,11 +58,13 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     auto diffStr = new wchar_t[256];
 
     double fpsTimer = 0.0f;
+    long fps = 0;
 
     while (!close)
     {
         WSR::Time::Update();
         fpsTimer += WSR::Time::GetDeltaTime();
+        ++fps;
         
         while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
@@ -74,11 +76,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
         if(fpsTimer < 0.5f || minimized) continue;
 
-        fpsTimer = 0.0f;
-        auto fps = 1.0f / WSR::Time::GetDeltaTime();
         auto dts = WSR::Time::GetDeltaTime() * 1000.0f;
-        auto _ = swprintf_s(diffStr, 256, L"Hoobs - %fms - %ifps", dts, static_cast<int>(fps));
+        auto _ = swprintf_s(diffStr, 256, L"Hoobs - %fms - %ifps", 0.5f / fps * 1000, static_cast<int>(fps / 0.5f));
         SetWindowText(WindowFromDC(hdc), diffStr);
+        fpsTimer = 0.0f;
+        fps = 0;
     }
 
     delete[] diffStr;

@@ -7,100 +7,98 @@ namespace WSR
 {
     const Color Renderer::m_BackgroundColor = {48, 24, 24, 255};
 
-#pragma region "Vertex"
-
     const Vertex triangle[] =
     {
-        {{500, 0, 0}, {0, 255, 0, 255}},
-        {{0, 500, 0}, {0, 0, 255, 255}},
-        {{1000, 500, 0}, {255, 0, 0, 255}}
+        {{0.25f, 0.5f, 0}, {0, 255, 0, 255}},
+        {{0.5f, 1.0f, 0}, {0, 0, 255, 255}},
+        {{0.75f, 0.0f, 0}, {255, 0, 0, 255}}
     };
-
-    // const Vertex triangle[] =
-    // {
-    //     {{0, 0, 0}, {0, 255, 0, 255}},
-    //     {{500, 500, 0}, {0, 0, 255, 255}},
-    //     {{1000, 0, 0}, {255, 0, 0, 255}}
-    // };
 
     float Renderer::EdgeFunction(const Vector3& a, const Vector3& b, const Vector3& c)
     {
         return (c.x - a.x) * (b.y - a.y) - (c.y - a.y) * (b.x - a.x);
     }
 
-    void Renderer::DrawTriangle(const Vertex& v0, const Vertex& v1, const Vertex& v2)
+    Vertex Renderer::VertexShader(const Vertex& v) const
     {
-        auto topVertex = v0;
-        auto midVertex = v1;
-        auto botVertex = v2;
+        return {{v.Position.x * m_Width, v.Position.y * m_Height, v.Position.z}, v.Color};
+    }
+
+    void Renderer::FillTopTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3)
+    {
+        float v1v2m = (v1.Position.x - v2.Position.x) / (v1.Position.y - v2.Position.y);
+        float v1v3m = (v1.Position.x - v3.Position.x) / (v1.Position.y - v3.Position.y);
+
+        float curx = v1.Position.x;
+        float curx2 = v1.Position.x;
+
+        for(auto scanline = static_cast<int>(v1.Position.y); scanline > static_cast<int>(v2.Position.y); scanline--)
+        {
+            for(auto x = static_cast<int>(curx); x <= static_cast<int>(curx2); x++)
+            {
+                SetPixel(static_cast<size_t>(x), static_cast<size_t>(scanline));
+            }
+
+            curx -= v1v3m;
+            curx2 -= v1v2m;
+        }
+    }
+
+    void Renderer::FillBotTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3)
+    {
+        auto v3v1m = (v3.Position.x - v1.Position.x) / (v3.Position.y - v1.Position.y);
+        auto v3v2m = (v3.Position.x - v2.Position.x) / (v3.Position.y - v2.Position.y);
+
+        auto curx = v3.Position.x;
+        auto curx2 = v3.Position.x;
+            
+        for(auto scanline = static_cast<int>(v3.Position.y); scanline <= static_cast<int>(v1.Position.y); scanline++)
+        {                
+            for(auto x = static_cast<int>(curx); x <= static_cast<int>(curx2); x++)
+            {
+                SetPixel(static_cast<size_t>(x), static_cast<size_t>(scanline));
+            }
+
+            curx += v3v1m;
+            curx2 += v3v2m;
+        }
+    }
+
+    
+    void Renderer::DrawTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3)
+    {
+        auto topVertex = VertexShader(v1);
+        auto midVertex = VertexShader(v2);
+        auto botVertex = VertexShader(v3);
 
         if (botVertex.Position.y > midVertex.Position.y) std::swap(botVertex, midVertex);
         if (midVertex.Position.y > topVertex.Position.y) std::swap(midVertex, topVertex);
         if (botVertex.Position.y > midVertex.Position.y) std::swap(botVertex, midVertex);
 
-        auto topY = static_cast<int>(topVertex.Position.y);
-        auto midY = static_cast<int>(midVertex.Position.y);
-        auto botY = static_cast<int>(botVertex.Position.y);
-
-        auto topBotM = (botVertex.Position.y - topVertex.Position.y) / (botVertex.Position.x - topVertex.Position.x);
-        auto topMidM = (midVertex.Position.y - topVertex.Position.y) / (midVertex.Position.x - topVertex.Position.x);
-        auto botMidM = (botVertex.Position.y - midVertex.Position.y) / (botVertex.Position.x - midVertex.Position.x);
-
-        auto topBotC = topVertex.Position.y - topBotM * topVertex.Position.x;
-        auto topMidC = topVertex.Position.y - topMidM * topVertex.Position.x;
-        auto botMidC = midVertex.Position.y - botMidM * midVertex.Position.x;
-
-        SetColor(24, 48, 24);
-
-        for (auto y = botY; y <= midY; y++)
+        SetColor(48, 48, 48);
+        
+        if(abs(midVertex.Position.y - botVertex.Position.y) < 0.001f)
         {
-            float startX = 0;
-            float endX = 0;
-            if (botMidM < 0.001f)
-            {
-                startX = botVertex.Position.x;
-                endX = midVertex.Position.x;
-            }
-            else
-            {
-                startX = (static_cast<float>(y) - topBotC) / topBotM;
-                endX = (static_cast<float>(y) - botMidC) / botMidM;
-            }
-            
-            if (startX > endX) std::swap(startX, endX);
-            
-            for (auto x = static_cast<int>(startX); x < static_cast<int>(endX); x++)
-            {
-                SetPixel(static_cast<size_t>(x), static_cast<size_t>(y));
-            }
+            FillTopTriangle(topVertex, midVertex, botVertex);
         }
-
-        for (auto y = midY; y <= topY; y++)
+        else if(abs(midVertex.Position.y - topVertex.Position.y) < 0.001f)
         {
-            float startX = 0;
-            float endX = 0;
-
-            if (topMidM < 0.001f)
-            {
-                startX = topVertex.Position.x;
-                endX = botVertex.Position.x;
-            }
-            else
-            {
-                startX = (static_cast<float>(y) - topBotC) / topBotM;
-                endX = (static_cast<float>(y) - topMidC) / topMidM;
-            }
-
-            if (startX > endX) std::swap(startX, endX);
-            
-            for (auto x = static_cast<int>(startX); x < static_cast<int>(endX); x++)
-            {
-                SetPixel(static_cast<size_t>(x), static_cast<size_t>(y));
-            }
+            FillBotTriangle(topVertex, midVertex, botVertex);
+        }
+        else
+        {
+            Vertex v4 = {
+                {
+                    topVertex.Position.x + (midVertex.Position.y - topVertex.Position.y) / (botVertex.Position.y - topVertex.Position.y) * (botVertex.Position.x - topVertex.Position.x),
+                    midVertex.Position.y,
+                    0
+                },
+                {0, 0, 0, 0}
+            };
+            FillTopTriangle(topVertex, v4, midVertex);
+            FillBotTriangle(midVertex, v4, botVertex);
         }
     }
-
-#pragma endregion
 
     Renderer::Renderer(DWORD width, DWORD height)
     {
