@@ -74,10 +74,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
         renderer.Loop(hdc, hWnd, bmi);
 
-        if(fpsTimer < 0.5f || minimized) continue;
-
-        auto dts = WSR::Time::GetDeltaTime() * 1000.0f;
-        auto _ = swprintf_s(diffStr, 256, L"Hoobs - %fms - %ifps", 0.5f / fps * 1000, static_cast<int>(fps / 0.5f));
+        if(fpsTimer < 1 || minimized) continue;
+        auto _ = swprintf_s(diffStr, 256, L"Hoobs - %fms - %ifps", 1.0f / static_cast<float>(fps) * 1000.0f, static_cast<int>(fps));
         SetWindowText(WindowFromDC(hdc), diffStr);
         fpsTimer = 0.0f;
         fps = 0;
