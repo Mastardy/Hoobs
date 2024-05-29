@@ -9,9 +9,9 @@ namespace WSR
 
     const Vertex triangle[] =
     {
-        {{0.25f, 0.5f, 0}, {0, 255, 0, 255}},
-        {{0.5f, 1.0f, 0}, {0, 0, 255, 255}},
-        {{0.75f, 0.0f, 0}, {255, 0, 0, 255}}
+        {{0.25f, 0.5f, 0}, {255, 255, 0, 255}},
+        {{0.5f, 1.0f, 0}, {0, 255, 255, 255}},
+        {{0.75f, 0.0f, 0}, {255, 0, 255, 255}}
     };
 
     float Renderer::EdgeFunction(const Vector3& a, const Vector3& b, const Vector3& c)
@@ -70,7 +70,7 @@ namespace WSR
         auto v3v1m = (v3.Position.x - v1.Position.x) / (v3.Position.y - v1.Position.y);
         auto v3v4m = (v3.Position.x - v4.Position.x) / (v3.Position.y - v4.Position.y);
 
-        m_ThreadPool.QueueJob([this, v1, v2, v3, v4, v3v1m, v3v4m]()
+        m_ThreadPool.QueueJob([this, v1, v2, v3, v3v1m, v3v4m]()
         {
             float curx = v3.Position.x;
             float curx2 = v3.Position.x;
