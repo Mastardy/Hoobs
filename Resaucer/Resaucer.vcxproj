@@ -12,15 +12,15 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{11BC7EEE-3A98-4286-AEF7-48056CF6FA99}</ProjectGuid>
+    <ProjectGuid>{B51C0080-0914-4201-B881-C90CD9F15BEB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Hoobs</RootNamespace>
+    <RootNamespace>Resaucer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
-    <RootNamespace>Hoobs</RootNamespace>
+    <RootNamespace>Resaucer</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -51,15 +51,15 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <OutDir>$(SolutionDir)bin\$(Configuration)\Hoobs\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\$(Configuration)\Hoobs\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\Resaucer\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(Configuration)\Resaucer\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)bin\$(Configuration)\Hoobs\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\$(Configuration)\Hoobs\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\Resaucer\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(Configuration)\Resaucer\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -73,7 +73,7 @@
       <AdditionalIncludeDirectories>s</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -92,7 +92,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -100,37 +100,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Core\ThreadPool.cpp" />
-    <ClCompile Include="Core\Vertex.cpp" />
-    <ClCompile Include="Mathematics\Color.cpp" />
-    <ClCompile Include="Mathematics\Matrix3.cpp" />
-    <ClCompile Include="Mathematics\Matrix4.cpp" />
-    <ClCompile Include="Mathematics\Random.cpp" />
-    <ClCompile Include="Mathematics\Rect.cpp" />
-    <ClCompile Include="Mathematics\Vector2.cpp" />
-    <ClCompile Include="Mathematics\Vector3.cpp" />
-    <ClCompile Include="Mathematics\Vector4.cpp" />
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Utils\Console.cpp" />
-    <ClCompile Include="Utils\Logging.cpp" />
-    <ClCompile Include="Utils\Time.cpp" />
-    <ClCompile Include="WinMain.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Core\ThreadPool.hpp" />
-    <ClInclude Include="Core\Vertex.hpp" />
-    <ClInclude Include="Mathematics\Color.hpp" />
-    <ClInclude Include="Mathematics\Matrix3.hpp" />
-    <ClInclude Include="Mathematics\Matrix4.hpp" />
-    <ClInclude Include="Mathematics\Random.hpp" />
-    <ClInclude Include="Mathematics\Rect.hpp" />
-    <ClInclude Include="Mathematics\Vector2.hpp" />
-    <ClInclude Include="Mathematics\Vector3.hpp" />
-    <ClInclude Include="Mathematics\Vector4.hpp" />
-    <ClInclude Include="Renderer.hpp" />
-    <ClInclude Include="Utils\Console.hpp" />
-    <ClInclude Include="Utils\Logging.hpp" />
-    <ClInclude Include="Utils\Time.hpp" />
+    <ClCompile Include="Resaucer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
