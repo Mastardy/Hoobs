@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hoobs", "Hoobs\Hoobs.vcxproj", "{11BC7EEE-3A98-4286-AEF7-48056CF6FA99}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Resaucer", "Resaucer\Resaucer.vcxproj", "{B51C0080-0914-4201-B881-C90CD9F15BEB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -14,9 +12,5 @@ Global
 		{11BC7EEE-3A98-4286-AEF7-48056CF6FA99}.Debug|x64.Build.0 = Debug|x64
 		{11BC7EEE-3A98-4286-AEF7-48056CF6FA99}.Release|x64.ActiveCfg = Release|x64
 		{11BC7EEE-3A98-4286-AEF7-48056CF6FA99}.Release|x64.Build.0 = Release|x64
-		{B51C0080-0914-4201-B881-C90CD9F15BEB}.Debug|x64.ActiveCfg = Debug|x64
-		{B51C0080-0914-4201-B881-C90CD9F15BEB}.Debug|x64.Build.0 = Debug|x64
-		{B51C0080-0914-4201-B881-C90CD9F15BEB}.Release|x64.ActiveCfg = Release|x64
-		{B51C0080-0914-4201-B881-C90CD9F15BEB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 EndGlobal

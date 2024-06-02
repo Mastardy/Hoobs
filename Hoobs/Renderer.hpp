@@ -25,7 +25,7 @@ namespace WSR
         void SetPixel(size_t, size_t);
         void SetPixel(size_t, size_t, const Color&);
         void DrawTriangle(const Vertex&, const Vertex&, const Vertex&);
-        void FillTopTriangle(const Vertex&, const Vertex&, const Vertex&, const Vertex&);
+        void FillTopTriangle(const Vertex&, const Vertex&, const Vertex&, const Vertex&, bool);
         void FillBotTriangle(const Vertex&, const Vertex&, const Vertex&, const Vertex&);
 
         static inline float EdgeFunction(const Vector3&, const Vector3&, const Vector3&);
