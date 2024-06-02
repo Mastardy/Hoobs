@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "../Utils/Logging.hpp"
 
-namespace WSR
+namespace Hoobs
 {
 	const Matrix3 Matrix3::zero = Matrix3(0);
 	const Matrix3 Matrix3::identity = Matrix3(1, 0, 0, 0, 1, 0, 0, 0, 1);

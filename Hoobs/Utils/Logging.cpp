@@ -4,7 +4,7 @@
 #include <ctime>
 #include <windows.h>
 
-namespace WSR
+namespace Hoobs
 {
     Console* Logging::m_Console = nullptr;
     

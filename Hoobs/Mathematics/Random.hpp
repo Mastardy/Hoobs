@@ -4,7 +4,7 @@
 #include <random>
 #include <map>
 
-namespace WSR
+namespace Hoobs
 {	
 	class  Random
 	{

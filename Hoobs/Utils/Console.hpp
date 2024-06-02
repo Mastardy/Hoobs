@@ -5,7 +5,7 @@
 #include <queue>
 #include <thread>
 
-namespace WSR
+namespace Hoobs
 {
     struct ConsoleMessage
     {

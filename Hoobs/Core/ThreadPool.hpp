@@ -3,7 +3,7 @@
 #include <mutex>
 #include <queue>
 
-namespace WSR
+namespace Hoobs
 {
     class ThreadPool
     {

@@ -2,7 +2,7 @@
 
 using namespace std::chrono;
 
-namespace WSR
+namespace Hoobs
 {
     Time::TimeSince::TimeSince()
     {

@@ -6,7 +6,7 @@
 #include "Core/Vertex.hpp"
 #include "Mathematics/Color.hpp"
 
-namespace WSR
+namespace Hoobs
 {
     class Renderer
     {

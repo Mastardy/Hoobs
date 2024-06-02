@@ -1,6 +1,6 @@
 ﻿#include "Color.hpp"
 
-namespace WSR
+namespace Hoobs
 {
     const Color Color::BLACK = Color(0);
     const Color Color::GRAY = Color(128);

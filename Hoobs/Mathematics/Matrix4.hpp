@@ -4,7 +4,7 @@
 
 #include "Vector3.hpp"
 
-namespace WSR
+namespace Hoobs
 {
 	class Matrix4
 	{

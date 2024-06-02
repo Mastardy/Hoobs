@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-namespace WSR
+namespace Hoobs
 {
     //
     // Constants

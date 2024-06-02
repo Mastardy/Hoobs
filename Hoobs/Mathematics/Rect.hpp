@@ -5,7 +5,7 @@
 #include <iostream>
 #include <array>
 
-namespace WSR
+namespace Hoobs
 {
 	class Rect
 	{
@@ -47,7 +47,7 @@ namespace WSR
 		bool operator==(const Rect& other) const;
 		bool operator!=(const Rect& other) const;
 		
-		friend std::ostream& operator<<(std::ostream& os, const WSR::Rect& rect) { return os << rect.ToString(); }
+		friend std::ostream& operator<<(std::ostream& os, const Hoobs::Rect& rect) { return os << rect.ToString(); }
 
 		float Area() const;
 		Vector2 Center() const;

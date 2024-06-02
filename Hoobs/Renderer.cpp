@@ -3,7 +3,7 @@
 #include "Utils/Logging.hpp"
 #include "Utils/Time.hpp"
 
-namespace WSR
+namespace Hoobs
 {
     const Color Renderer::m_BackgroundColor = {48, 24, 24, 255};
 
@@ -161,7 +161,7 @@ namespace WSR
         m_DibBits.resize(static_cast<size_t>(m_Width) * static_cast<size_t>(m_Height));
 
         m_PoolSize = std::thread::hardware_concurrency() - 1;
-        WSR::Logging::Info("Pool size: " + std::to_string(m_PoolSize));
+        Hoobs::Logging::Info("Pool size: " + std::to_string(m_PoolSize));
         m_ThreadPool.Start(m_PoolSize);
     }
 

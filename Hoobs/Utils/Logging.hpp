@@ -4,7 +4,7 @@
 
 #include "Console.hpp"
 
-namespace WSR
+namespace Hoobs
 {
     class Logging
     {

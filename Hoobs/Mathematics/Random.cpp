@@ -1,6 +1,6 @@
 #include "Random.hpp"
 
-namespace WSR
+namespace Hoobs
 {
     std::map<int, std::mt19937_64> Random::generators{{0, std::mt19937_64()}};
     int Random::currentSeed = 0;

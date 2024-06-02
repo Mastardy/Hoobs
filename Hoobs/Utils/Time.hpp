@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-namespace WSR
+namespace Hoobs
 {
     using namespace std::chrono;
 

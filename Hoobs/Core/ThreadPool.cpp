@@ -2,7 +2,7 @@
 
 #include "../Utils/Logging.hpp"
 
-namespace WSR
+namespace Hoobs
 {
     ThreadPool::ThreadPool(size_t threadsCount)
     {

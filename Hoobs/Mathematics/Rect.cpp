@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 
-namespace WSR
+namespace Hoobs
 {
 	Rect::Rect() : x{0}, y{0}, w{0}, h{0} {}
 	Rect::Rect(float value) : x{value}, y{value}, w{value}, h{value} {}

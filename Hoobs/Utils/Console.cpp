@@ -3,7 +3,7 @@
 #include <iostream>
 #include <Windows.h>
 
-namespace WSR
+namespace Hoobs
 {
     Console* Console::m_Instance = nullptr;
     

@@ -5,7 +5,7 @@
 #include <string>
 #include <array>
 
-namespace WSR
+namespace Hoobs
 {
     class Vector3
     {

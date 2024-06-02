@@ -5,7 +5,7 @@
 #include <sstream>
 
 
-namespace WSR
+namespace Hoobs
 {
 	const Matrix4 Matrix4::zero = Matrix4(0);
 	const Matrix4 Matrix4::identity = Matrix4(1, 0, 0, 0,

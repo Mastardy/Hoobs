@@ -48,11 +48,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         bmih, {{0, 0, 0, 0}}
     };
 
-    WSR::Console console;
-    WSR::Renderer renderer(WIDTH, HEIGHT);
+    Hoobs::Console console;
+    Hoobs::Renderer renderer(WIDTH, HEIGHT);
 
-    WSR::Logging::Init();
-    WSR::Time::Init();
+    Hoobs::Logging::Init();
+    Hoobs::Time::Init();
 
     auto hdc = GetDC(hWnd);
     auto diffStr = new wchar_t[256];
@@ -62,8 +62,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     while (!close)
     {
-        WSR::Time::Update();
-        fpsTimer += WSR::Time::GetDeltaTime();
+        Hoobs::Time::Update();
+        fpsTimer += Hoobs::Time::GetDeltaTime();
         ++fps;
         
         while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
