@@ -9,16 +9,16 @@ namespace Hoobs
     
     const Vertex leftTriangle[] =
     {
-        {{0.25f, 0.25f, 0}, {255, 255, 0, 255}, {0, 0}},
-        {{0.25f, 0.75f, 0}, {0, 255, 255, 255}, {0, 1}},
-        {{0.75f, 0.25f, 0}, {255, 0, 255, 255}, {1, 0}}
+        {{0.25f, 0.25f, 0}, {0, 0}},
+        {{0.25f, 0.75f, 0}, {0, 1}},
+        {{0.75f, 0.25f, 0}, {1, 0}}
     };
 
     const Vertex rightTriangle[] =
     {
-        {{0.25f, 0.75f, 0}, {0, 255, 255, 255}, {0, 1}},
-        {{0.75f, 0.75f, 0}, {255, 255, 0, 255}, {1, 1}},
-        {{0.75f, 0.25f, 0}, {255, 0, 255, 255}, {1, 0}}
+        {{0.25f, 0.75f, 0}, {0, 1}},
+        {{0.75f, 0.75f, 0}, {1, 1}},
+        {{0.75f, 0.25f, 0}, {1, 0}}
     };
 
     float Renderer::EdgeFunction(const Vector3& a, const Vector3& b, const Vector3& c)
@@ -28,20 +28,14 @@ namespace Hoobs
 
     Vertex Renderer::VertexShader(const Vertex& v) const
     {
-        return {{v.Position.x * m_Width, v.Position.y * m_Height, v.Position.z}, v.Color, v.TexCoord};
+        return {{v.Position.x * m_Width, v.Position.y * m_Height, v.Position.z}, v.TexCoord};
     }
 
     Color FragmentShader(float u, float v, float w, const Vertex& v1, const Vertex& v2, const Vertex& v3, const Texture& texture)
     {
         auto uTex = v1.TexCoord.x * u + v2.TexCoord.x * v + v3.TexCoord.x * w;
         auto vTex = v1.TexCoord.y * u + v2.TexCoord.y * v + v3.TexCoord.y * w;
-        
         auto color = texture.ColorAt(uTex, vTex);
-        
-        color.r = static_cast<UINT8>((color.r / 255.0f) * (v1.Color.r * u + v2.Color.r * v + v3.Color.r * w));
-        color.g = static_cast<UINT8>((color.g / 255.0f) * (v1.Color.g * u + v2.Color.g * v + v3.Color.g * w));
-        color.b = static_cast<UINT8>((color.b / 255.0f) * (v1.Color.b * u + v2.Color.b * v + v3.Color.b * w));
-        //color.a = static_cast<UINT8>((color.a / 255.0f) * (v1.Color.a * u + v2.Color.a * v + v3.Color.a * w));
         
         return color;
     }
@@ -152,7 +146,6 @@ namespace Hoobs
                     midVertex.Position.y,
                     0
                 },
-                {0, 0, 0, 0},
                 {0, 0}
             };
             FillTopTriangle(topVertex, botVertex, midVertex, v4, false);

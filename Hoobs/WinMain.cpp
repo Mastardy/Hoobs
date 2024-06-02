@@ -3,7 +3,6 @@
 #include <windows.h>
 
 #include "Renderer.hpp"
-#include "Core/Texture.hpp"
 #include "Utils/Logging.hpp"
 #include "Utils/Console.hpp"
 #include "Utils/Time.hpp"
@@ -41,7 +40,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     BITMAPINFOHEADER bmih
     {
         sizeof(BITMAPINFOHEADER), WIDTH, HEIGHT, 1, 32, BI_RGB,
-        WIDTH * HEIGHT * 4, 0, 0, 0, 0
+         0, WIDTH, HEIGHT, 0, 0
     };
     
     BITMAPINFO bmi
