@@ -1,4 +1,4 @@
-﻿#include "Color.hpp"
+#include "Color.hpp"
 
 namespace Hoobs
 {

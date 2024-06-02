@@ -2,6 +2,7 @@
 #include <vector>
 #include <windows.h>
 
+#include "Core/Texture.hpp"
 #include "Core/ThreadPool.hpp"
 #include "Core/Vertex.hpp"
 #include "Mathematics/Color.hpp"
@@ -14,7 +15,7 @@ namespace Hoobs
         Renderer(DWORD, DWORD);
         
         void Loop(HDC, HWND, const BITMAPINFO&);
-        
+
     private:
         void ClearBuffer();
         void ClearBufferThreaded(size_t start, size_t end);
@@ -32,6 +33,7 @@ namespace Hoobs
         Vertex VertexShader(const Vertex&) const;
 
         Color m_CurrentColor;
+        Texture m_Texture = Texture("awesomeface.png");
         
         std::vector<Color> m_DibBits;
         const static Color m_BackgroundColor;

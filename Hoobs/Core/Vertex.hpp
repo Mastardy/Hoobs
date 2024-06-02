@@ -7,6 +7,7 @@ namespace Hoobs
     struct Vertex
     {
         Hoobs::Vector3 Position;
-        WSR::Color Color;
+        Hoobs::Color Color;
+        Hoobs::Vector2 TexCoord;
     };
 }

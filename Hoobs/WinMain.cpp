@@ -3,6 +3,7 @@
 #include <windows.h>
 
 #include "Renderer.hpp"
+#include "Core/Texture.hpp"
 #include "Utils/Logging.hpp"
 #include "Utils/Console.hpp"
 #include "Utils/Time.hpp"
@@ -53,13 +54,13 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     Hoobs::Logging::Init();
     Hoobs::Time::Init();
-
+    
     auto hdc = GetDC(hWnd);
     auto diffStr = new wchar_t[256];
 
     double fpsTimer = 0.0f;
     long fps = 0;
-
+    
     while (!close)
     {
         Hoobs::Time::Update();

@@ -99,8 +99,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>echo D|xcopy "$(SolutionDir)assets" "$(OutDir)Assets" /i /e /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\ThreadPool.cpp" />
     <ClCompile Include="Core\Vertex.cpp" />
     <ClCompile Include="Mathematics\Color.cpp" />
@@ -118,6 +122,7 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\Texture.hpp" />
     <ClInclude Include="Core\ThreadPool.hpp" />
     <ClInclude Include="Core\Vertex.hpp" />
     <ClInclude Include="Mathematics\Color.hpp" />
@@ -129,9 +134,13 @@
     <ClInclude Include="Mathematics\Vector3.hpp" />
     <ClInclude Include="Mathematics\Vector4.hpp" />
     <ClInclude Include="Renderer.hpp" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="Utils\Console.hpp" />
     <ClInclude Include="Utils\Logging.hpp" />
     <ClInclude Include="Utils\Time.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="awesomeface.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
